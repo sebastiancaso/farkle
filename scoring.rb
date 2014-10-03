@@ -8,28 +8,6 @@
 # Three 5s			500
 # Three 6s			600
 
-# class Die
-# 	attr_reader :sides
-	
-# 	def initialize 
-# 		@sides = rand(1..6)
-# 	end 
-# end 
-
-# farkle_cup = []
-
-# #puts dice in farkle cup
-# 6.times do 
-# 	farkle_cup << Die.new
-# end 
-
-#this logic has been moved to roll.rb
-# count = Hash.new 0 
-
-# farkle_cup.each do |die|
-#   count[die.sides] += 1
-# end
-# score_pad = []
 module Scoring
 
 	def calc_banked(dice)
@@ -67,14 +45,14 @@ module Scoring
 		end 
 		 return points.inject{|element, sum| sum + element}
 	end
+
+	def winning_score(all_players)
+		if player.score > 10000
+			victory = true 
+		else
+			victory = false
+		end 
+	end 
 end
 
-# bank = "222"
-
-# p "--------"
-# p calc_banked(bank)
-
-
-
-# # p count
 

@@ -6,23 +6,15 @@ class Roll
 
 	def initialize 
 		@farkle_cup = [] 
-		@board = []
 	end 
 		
 	def roll_dice(total_dice)
-		#puts dice in farkle cup
 		(total_dice).times do 
 			@farkle_cup << rand(6) + 1
 		end 
+		@farkle_cup
 	end 
 
-	def show_roll	 
-		@board= []
-		@farkle_cup.each do |die|
-			@board << die
-		end
-		@board
-	end 
 	
 	def count_roll	
 		count = Hash.new 0
