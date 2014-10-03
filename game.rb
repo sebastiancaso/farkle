@@ -1,4 +1,3 @@
-require_relative 'die'
 require_relative 'roll'
 require_relative 'scoring'
 require_relative 'player'

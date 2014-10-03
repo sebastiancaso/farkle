@@ -1,4 +1,3 @@
-require_relative 'die'
 require_relative 'scoring'
 
 class Roll
