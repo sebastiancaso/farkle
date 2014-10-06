@@ -7,6 +7,9 @@
 # Three 4s			400
 # Three 5s			500
 # Three 6s			600
+#Four of a kind 	1000
+#Five of a kind		2000
+#Six of a kind 		3000
 
 module Scoring
 
@@ -18,7 +21,7 @@ module Scoring
 		return count
 	end 
 	
-	
+	#four 1s is registering as 1000 when it should be 1100
 	def calculate_score(count)
 		points = []
 		2.times do 

@@ -38,33 +38,40 @@ class Game
 
 	def turn(current_player)  #set up farkle scenario
 		p "#---------------------------------------------New Turn---------------------------------------------#"
-		#to take care of loss of points on farkle create a turn array that will be used to subtract points
-		temp_score = 0
 		end_turn = nil
 		total_dice = 6 
 		farkle = false
-		until end_turn == 'p' #set hot dice here
+		 
+		until end_turn == 'p' 
 			#displays roll and populates farkle_cup with dice
 			p roll.roll_dice(total_dice) 
 			p "You have #{current_player.show_score} points for the game."	
+
+			#break if into its own method into
 			if farkle(calculate_score(roll.count_roll)) == true
 				self.roll.farkle_cup.clear
+				current_player.turn_points = 0 
 				end_turn = 'p'
+				#break else into its own method
 			else
 				p "You scored a total of #{calculate_score(roll.count_roll)} points on that roll.  Which dice would you like to select?"
 				p "#-----------------------------------------------#"
-				selection = gets.chomp 		
-				#select dice to bank 
-				turn_score = calculate_score(calc_banked(selection))
-				temp_score += turn_score
-				p "your temp score is #{temp_score}"
+				
+				selection = gets.chomp 		 
+				current_player.turn_points += calculate_score(calc_banked(selection))
+				p "your temp score is #{current_player.turn_points}"
 				roll.set_aside_dice(selection)
 				total_dice = total_dice - selection.length	
+					if roll.hot_dice? #break if into its own method
+						puts "#HOT DICE!!! YOU GET 6 MORE DICE TO THROW!"
+						self.turn(current_player)
+					end  
 				p "Would you like to roll again or end your turn? ('p' to end turn/ 'r' to roll again)"
 				self.roll.farkle_cup.clear
 				end_turn = gets.chomp
+				#break if into its own method 
 					if end_turn == 'p'
-						current_player.update_points(turn_score)
+						current_player.update_game_points
 					end 
 			end 
 		end		
@@ -75,7 +82,7 @@ class Game
 		
         # iterate through all the players
         until self.victory == true
-        	self.players.each do |current_player| #create a loop until game is won
+        	self.players.each do |current_player| 
         	  turn(current_player)
         	  winning_score(current_player) 
       		end
@@ -84,7 +91,9 @@ class Game
 	end 
 end 
 
-#need to add hot dice logic + clear turn points on Farkle
+#TODO
+#need to deal with recursive problem on hotdice turn.
+#break up turn method into smaller methods (generally methods should not be larger than 10 lines)
 puts "How many people are playing?"
 	answer = gets.chomp
 	game = Game.new

@@ -1,6 +1,6 @@
 class Player
 
-	attr_accessor :points
+	attr_accessor :points, :turn_points
 
 	def initialize
 		@points = 0 
@@ -13,6 +13,11 @@ class Player
 
 	def show_score
 		self.points
+	end 
+
+	def update_game_points
+		self.update_points(self.turn_points)
+		self.turn_points = 0
 	end 
 
 end 

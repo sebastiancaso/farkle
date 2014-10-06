@@ -2,10 +2,11 @@
 
 class Roll
 	
-	attr_reader :farkle_cup 
+	attr_reader :farkle_cup, :total_dice 
 
 	def initialize 
 		@farkle_cup = [] 
+		@total_dice = 6
 	end 
 		
 	def roll_dice(total_dice)
@@ -30,5 +31,17 @@ class Roll
 		end
 	end 
 
+	def hot_dice?
+		if self.farkle_cup.length == 0 	
+			return true 
+		else 
+			return false 
+		end 
+	end 
+
+	def update_dice(selection)
+		self.set_aside_dice(selection)
+		self.total_dice = self.total_dice - selection.length
+	end
 end 
 
