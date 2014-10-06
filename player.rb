@@ -4,6 +4,7 @@ class Player
 
 	def initialize
 		@points = 0 
+		@turn_points = 0
 	end 
 
 	def update_points(points)

@@ -18,17 +18,23 @@ module Scoring
 		return count
 	end 
 	
-	#does not recognize four numbers of non 5 or 1 ([4, 6, 2, 4, 4, 4])
+	
 	def calculate_score(count)
 		points = []
 		2.times do 
 			count.each do |key, value|
-				if value >= 3 && key == 1 
+				if value == 3 && key == 1 
 					points << 1000
-					 count[key] = value - 3 
-				elsif value >= 3 && key == 5 
-					points << 500
-					 count[key] = value - 3 
+					count.delete(key)
+				elsif value == 6
+					points << 3000   
+					count.delete(key)
+				elsif value == 5
+					points << 2000   
+					count.delete(key)
+				elsif value == 4
+					points << 1000   
+					count.delete(key)
 				elsif value == 3 
 					points << key * 100
 					count.delete(key)
@@ -45,14 +51,8 @@ module Scoring
 		end 
 		 return points.inject{|element, sum| sum + element}
 	end
-
-	def winning_score(all_players)
-		if player.score > 10000
-			victory = true 
-		else
-			victory = false
-		end 
-	end 
 end
+
+
 
 

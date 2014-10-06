@@ -1,8 +1,8 @@
-require_relative 'scoring'
+
 
 class Roll
-	include Scoring 
-	attr_reader :farkle_cup, :board
+	
+	attr_reader :farkle_cup 
 
 	def initialize 
 		@farkle_cup = [] 
