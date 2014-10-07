@@ -1,15 +1,15 @@
-require_relative 'roll'
+require_relative 'die'
 require_relative 'scoring'
 require_relative 'player'
 
 class Game 
 	include Scoring
 	attr_reader :players
-	attr_accessor :roll, :victory
+	attr_accessor :dice, :victory
 
 	def initialize
 		@players = []
-		@roll = Roll.new
+		@dice = Die.new
 		@victory = false
 	end 
 
@@ -29,7 +29,7 @@ class Game
 	end 
 
 	def farkle(points_scored)
-		if points_scored == nil
+		if calculate_score(points_scored) == 0
 			puts "Farkle!!!!!  You did not score!"
 			p "#-----------------------------------------------#"
 			return true
@@ -44,32 +44,36 @@ class Game
 		 
 		until end_turn == 'p' 
 			#displays roll and populates farkle_cup with dice
-			p roll.roll_dice(total_dice) 
+			p roll = dice.roll_dice(total_dice) 
 			p "You have #{current_player.show_score} points for the game."	
-
-			#break if into its own method into
-			if farkle(calculate_score(roll.count_roll)) == true
-				self.roll.farkle_cup.clear
+			
+			#break if statement into its own method into
+			#if 0 is returned set farkel to true
+			if farkle(roll) == true #count roll info in calculate
+				self.dice.farkle_cup.clear
 				current_player.turn_points = 0 
 				end_turn = 'p'
 				#break else into its own method
 			else
-				p "You scored a total of #{calculate_score(roll.count_roll)} points on that roll.  Which dice would you like to select?"
+				p "You scored a total of #{calculate_score(roll)} points on that roll.  Which dice would you like to select?"
 				p "#-----------------------------------------------#"
+
+				selection = gets.chomp
+				dice.set_aside_dice(selection)
 				
-				selection = gets.chomp 		 
-				current_player.turn_points += calculate_score(calc_banked(selection))
+				current_player.turn_points += calculate_score(selection) #calc bank in calculate score
+
 				p "your temp score is #{current_player.turn_points}"
-				roll.set_aside_dice(selection)
 				total_dice = total_dice - selection.length	
-					if roll.hot_dice? #break if into its own method
+					if dice.hot_dice? #break if into its own method
 						puts "#HOT DICE!!! YOU GET 6 MORE DICE TO THROW!"
 						self.turn(current_player)
 					end  
+					#make into roll_again method
 				p "Would you like to roll again or end your turn? ('p' to end turn/ 'r' to roll again)"
-				self.roll.farkle_cup.clear
+				self.dice.farkle_cup.clear
 				end_turn = gets.chomp
-				#break if into its own method 
+				
 					if end_turn == 'p'
 						current_player.update_game_points
 					end 
