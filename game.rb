@@ -36,6 +36,11 @@ class Game
 		end  
 	end 
 
+	# def turn_over(current_player)
+	# 	current_player.update_points(current_player.turn_points)
+	# 	current_player.turn_points = 0
+	# end
+
 	def turn(current_player)  #set up farkle scenario
 		p "#---------------------------------------------New Turn---------------------------------------------#"
 		end_turn = nil
@@ -65,21 +70,21 @@ class Game
 
 				p "your temp score is #{current_player.turn_points}"
 				total_dice = total_dice - selection.length	
-					if dice.hot_dice? #break if into its own method
-						puts "#HOT DICE!!! YOU GET 6 MORE DICE TO THROW!"
-						self.turn(current_player)
-					end  
-					#make into roll_again method
+				if dice.hot_dice? #break if into its own method
+					puts "#HOT DICE!!! YOU GET 6 MORE DICE TO THROW!"
+					self.turn(current_player)
+					break
+				end  
+					
 				p "Would you like to roll again or end your turn? ('p' to end turn/ 'r' to roll again)"
-				self.dice.farkle_cup.clear
 				end_turn = gets.chomp
+				self.dice.farkle_cup.clear
 				
-					if end_turn == 'p'
-						current_player.update_game_points
-					end 
+				
+				current_player.update_game_points if end_turn == 'p'				
 			end 
 		end		
-		#remove number of dice for next role (unless all 6 score)
+		
 	end 
 
 	def play

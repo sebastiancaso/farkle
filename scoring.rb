@@ -37,20 +37,15 @@ module Scoring
 				elsif value == 6
 					points += 3000   
 				elsif value == 5
-					points += 2000   
-					
+					points += 2000   					
 				elsif value == 4
-					points += 1000   
-					
+					points += 1000   					
 				elsif value == 3 
-					points += key * 100
-					
+					points += key * 100					
 				elsif key == 1
-					points += 100 * value
-					
+					points += 100 * value					
 				elsif key == 5
-					points += 50 * value
-					
+					points += 50 * value					
 				else
 					nil
 				end

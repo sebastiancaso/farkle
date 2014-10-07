@@ -15,16 +15,7 @@ class Die
 		end 
 		@farkle_cup
 	end 
-
-	#identical to bank_dice
-	def count_roll	
-		count = Hash.new 0
-		@farkle_cup.each do |die|
-		  count[die] += 1
-		end
-		count
-	end 
-
+ 
 	def set_aside_dice(dice_to_remove)
 		dice_to_remove.each_char do |char|
 			@farkle_cup.delete_at(@farkle_cup.index(char.to_i) || @farkle_cup.length)
