@@ -11,17 +11,17 @@ At the end of the player's turn, the dice are handed to the next player in succe
 [Farkle rules ](http://en.wikipedia.org/wiki/Farkle)
 
 Dice combination	Score
-Each 1				100
-Each 5				50
-Three 1s			1000
-Three 2s			200
-Three 3s			300
-Three 4s			400
-Three 5s			500
-Three 6s	   		600
-Four of a kind 		1000
-Five of a kind 		2000
-Six of a kind  		3000
++Each 1				100
++Each 5				50
++Three 1s			1000
++Three 2s			200
++Three 3s			300
++Three 4s			400
++Three 5s			500
++Three 6s	   		600
++Four of a kind 		1000
++Five of a kind 		2000
++Six of a kind  		3000
 
 #How to Play
 
