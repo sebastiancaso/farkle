@@ -49,8 +49,19 @@ describe Scoring do
 		it "expect three 1s and three 6s to equal 1600 points" do 
 			expect(calculate_score([1,1,1,6,6,6])).to eq(1600)
 		end 
-		
+
+		it "expect four of a kind and a pair of 5s to equal 1100" do 
+			expect(calculate_score([5,5,6,6,6,6])).to eq(1100)
+		end		
 	end 
 
-	
+	describe '#bank_dice' do 
+		it 'should convert string input to a hash' do
+		expect(bank_dice("1111")).to eq({1=>4}) 
+		end 
+
+		it 'should convert an array to a hash' do
+		expect(bank_dice([1,1,4,5,5])).to eq({1=>2, 4=>1, 5=>2}) 
+		end 
+	end 	
 end  

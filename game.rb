@@ -6,12 +6,13 @@ class Game
 	include Scoring
 	attr_reader :players
 	attr_accessor :dice, :victory
-
+	
 	def initialize
 		@players = []
 		@dice = Die.new
 		@victory = false
 	end 
+
 
 	def set_num_of_players(number)
 		number.times do 
@@ -19,6 +20,22 @@ class Game
 		end 
 	end
 
+	def select_dice(roll)
+		p "You scored a total of #{calculate_score(roll)} points on that roll.  Which dice would you like to select?"
+		p "#-----------------------------------------------#"
+	
+		gets.chomp		
+	end 
+
+	#updates the players points/dice
+	def in_turn_update(player, player_selection)
+		dice.set_aside_dice(player_selection)
+		player.turn_points += calculate_score(player_selection) 
+		p "your turn score is #{player.turn_points}"
+			
+	end 
+	
+	#determines if a player has a winning score
 	def winning_score(player)
 		if player.points > 10000
 			self.victory = true 
@@ -28,6 +45,11 @@ class Game
 		end 
 	end 
 
+	def clear_farkle_cup
+		self.dice.farkle_cup.clear
+	end 
+
+	#determines if no points were scored on a roll
 	def farkle(points_scored)
 		if calculate_score(points_scored) == 0
 			puts "Farkle!!!!!  You did not score!"
@@ -36,41 +58,32 @@ class Game
 		end  
 	end 
 
-	# def turn_over(current_player)
-	# 	current_player.update_points(current_player.turn_points)
-	# 	current_player.turn_points = 0
-	# end
-
-	def turn(current_player)  #set up farkle scenario
+	
+	#contains most of game logic
+	def turn(current_player)  
 		p "#---------------------------------------------New Turn---------------------------------------------#"
 		end_turn = nil
 		total_dice = 6 
 		farkle = false
 		 
 		until end_turn == 'p' 
+			
 			#displays roll and populates farkle_cup with dice
 			p roll = dice.roll_dice(total_dice) 
 			p "You have #{current_player.show_score} points for the game."	
-			
-			#break if statement into its own method into
-			#if 0 is returned set farkel to true
-			if farkle(roll) == true #count roll info in calculate
-				self.dice.farkle_cup.clear
+					
+			#if 0 is returned set farkle to true
+			if farkle(roll) == true 
+				clear_farkle_cup
 				current_player.turn_points = 0 
 				end_turn = 'p'
-				#break else into its own method
-			else
-				p "You scored a total of #{calculate_score(roll)} points on that roll.  Which dice would you like to select?"
-				p "#-----------------------------------------------#"
-
-				selection = gets.chomp
-				dice.set_aside_dice(selection)
+			else #player chooses dice and turn_score is updated
+				selection = select_dice(roll)
+				in_turn_update(current_player, selection)
 				
-				current_player.turn_points += calculate_score(selection) #calc bank in calculate score
+				total_dice = total_dice - selection.length
 
-				p "your temp score is #{current_player.turn_points}"
-				total_dice = total_dice - selection.length	
-				if dice.hot_dice? #break if into its own method
+				if dice.hot_dice? 
 					puts "#HOT DICE!!! YOU GET 6 MORE DICE TO THROW!"
 					self.turn(current_player)
 					break
@@ -78,31 +91,26 @@ class Game
 					
 				p "Would you like to roll again or end your turn? ('p' to end turn/ 'r' to roll again)"
 				end_turn = gets.chomp
-				self.dice.farkle_cup.clear
 				
-				
+				clear_farkle_cup 
+								
 				current_player.update_game_points if end_turn == 'p'				
 			end 
-		end		
-		
+		end				
 	end 
 
-	def play
-		
-        # iterate through all the players
+	def play		
+        # Iterates through all the players until a winning score is detected
         until self.victory == true
         	self.players.each do |current_player| 
         	  turn(current_player)
         	  winning_score(current_player) 
       		end
-      	end 
-		
+      	end 		
 	end 
 end 
 
-#TODO
-#need to deal with recursive problem on hotdice turn.
-#break up turn method into smaller methods (generally methods should not be larger than 10 lines)
+
 puts "How many people are playing?"
 	answer = gets.chomp
 	game = Game.new

@@ -13,7 +13,8 @@
 
 module Scoring
 
-	def bank_dice(dice) #change name to set aside?
+	#formats die roll info into a hash ex.{1=>3} == 111
+	def bank_dice(dice) 
 		count = Hash.new 0
 		if dice.is_a? String
 			dice.each_char do |die|
@@ -27,7 +28,7 @@ module Scoring
 		return count 
 	end 
 	
-	#four 1s is registering as 1000 when it should be 1100
+	#calculates score
 	def calculate_score(removed_dice)
 		banked_dice = bank_dice(removed_dice)
 		points = 0 
